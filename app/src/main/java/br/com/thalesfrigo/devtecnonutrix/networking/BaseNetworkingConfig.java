@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseNetworkingConfig {
 
     private static final String BASE_URL = "http://api.tecnonutri.com.br/api/v4/";
-    private static final int TIMEOUT = 30;
+    private static final int TIMEOUT = 60;
 
     public static <S> S createService(Class<S> serviceClass) {
 

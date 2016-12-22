@@ -16,6 +16,7 @@ import java.util.List;
 import br.com.thalesfrigo.devtecnonutrix.R;
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.util.DateUtil;
+import br.com.thalesfrigo.devtecnonutrix.view.callback.FeedListCallback;
 
 /**
  * Created by thalesfrigo on 12/21/16.
@@ -25,11 +26,11 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
 
     private Context context;
     private List<Feed> feeds;
-    private final OnItemClickListener listener;
+    private final FeedListCallback callback;
 
-    public FeedViewAdapter(Context context, OnItemClickListener listener) {
+    public FeedViewAdapter(Context context, FeedListCallback callback) {
         this.context = context;
-        this.listener = listener;
+        this.callback = callback;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Feed feed = feeds.get(position);
 
-        holder.click(feed, listener);
+        holder.click(feed, callback);
 
         holder.profileNameTextView.setText(feed.getUser().getName());
         holder.profileGoalTextView.setText(feed.getUser().getGoal());
@@ -99,17 +100,15 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
             mealEnergyTextView = (TextView) view.findViewById(R.id.meal_energy);
         }
 
-        public void click(final Feed feed, final OnItemClickListener listener) {
+        public void click(final Feed feed, final FeedListCallback callback) {
             mealImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onClick(feed);
+                    if(callback != null){
+                        callback.onClick(feed);
+                    }
                 }
             });
         }
-    }
-
-    public interface OnItemClickListener {
-        void onClick(Feed feed);
     }
 }
