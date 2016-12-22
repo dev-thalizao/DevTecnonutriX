@@ -1,11 +1,10 @@
-package br.com.thalesfrigo.devtecnonutrix.presenter.adapter;
+package br.com.thalesfrigo.devtecnonutrix.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +15,7 @@ import java.util.List;
 
 import br.com.thalesfrigo.devtecnonutrix.R;
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
+import br.com.thalesfrigo.devtecnonutrix.util.DateUtil;
 
 /**
  * Created by thalesfrigo on 12/21/16.
@@ -27,9 +27,8 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
     private List<Feed> feeds;
     private final OnItemClickListener listener;
 
-    public FeedViewAdapter(Context context, List<Feed> feeds, OnItemClickListener listener) {
+    public FeedViewAdapter(Context context, OnItemClickListener listener) {
         this.context = context;
-        this.feeds = feeds;
         this.listener = listener;
     }
 
@@ -56,12 +55,13 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
                 .skipMemoryCache(true)
                 .into(holder.profileImageView);
 
-        holder.mealStatusTextView.setText(feed.getMealType() + " de " + feed.getMealDate());
+        holder.mealStatusTextView.setText(feed.getMealType() + " de " + DateUtil.formatDate(feed.getMealDate(), "dd/MM/yyyy"));
         holder.mealEnergyTextView.setText("5000 kcal");
 
         // Download feed imageUrl
         Glide.with(context)
                 .load(feed.getImageUrl())
+                .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .skipMemoryCache(true)
                 .into(holder.mealImageView);
@@ -72,8 +72,12 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
         return feeds.size();
     }
 
-    public interface OnItemClickListener {
-        void onClick(Feed feed);
+    public List<Feed> getFeeds() {
+        return feeds;
+    }
+
+    public void setFeeds(List<Feed> feeds) {
+        this.feeds = feeds;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -103,5 +107,9 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewAdapter.ViewHo
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onClick(Feed feed);
     }
 }

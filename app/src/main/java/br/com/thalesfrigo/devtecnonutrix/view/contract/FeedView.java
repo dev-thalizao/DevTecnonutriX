@@ -1,4 +1,4 @@
-package br.com.thalesfrigo.devtecnonutrix.view;
+package br.com.thalesfrigo.devtecnonutrix.view.contract;
 
 import java.util.List;
 
