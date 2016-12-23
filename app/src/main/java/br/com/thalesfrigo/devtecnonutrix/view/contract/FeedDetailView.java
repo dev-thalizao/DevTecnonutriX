@@ -11,5 +11,5 @@ public interface FeedDetailView {
     void startProgress();
     void finishProress();
     void updateFeed(Feed feed);
-    void showErrorMessage(String message);
+    void showErrorMessage(int messageResourceId);
 }

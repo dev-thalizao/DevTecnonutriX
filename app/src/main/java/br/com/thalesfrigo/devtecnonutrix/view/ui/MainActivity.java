@@ -53,6 +53,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void showMessage(View view, int messageResourceId) {
-        Snackbar.make(view, messageResourceId, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, messageResourceId, Snackbar.LENGTH_LONG).show();
     }
 }

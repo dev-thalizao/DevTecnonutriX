@@ -16,4 +16,7 @@
     <string name="carb_value">%1$sg</string>
     <string name="prot_value">%1$sg</string>
     <string name="fat_value">%1$sg</string>
+    <string name="meal_status">%1$s de %2$s</string>
+    <string name="feedNotAvailable">Conteúdo não disponível</string>
+    <string name="generic_error">Ops! Houve um erro inesperado :/</string>
 </resources>

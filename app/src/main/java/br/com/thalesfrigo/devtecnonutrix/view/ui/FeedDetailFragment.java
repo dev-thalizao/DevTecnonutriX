@@ -140,7 +140,7 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
     }
 
     @Override
-    public void showErrorMessage(String message) {
-
+    public void showErrorMessage(int messageResourceId) {
+        mBaseView.showMessage(getView(), messageResourceId);
     }
 }

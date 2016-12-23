@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.model.User;
 import br.com.thalesfrigo.devtecnonutrix.presenter.FeedPresenter;
 import br.com.thalesfrigo.devtecnonutrix.util.DateUtil;
+import br.com.thalesfrigo.devtecnonutrix.util.LoadMode;
 import br.com.thalesfrigo.devtecnonutrix.view.adapter.FeedViewAdapter;
 import br.com.thalesfrigo.devtecnonutrix.view.callback.FeedListCallback;
 import br.com.thalesfrigo.devtecnonutrix.view.callback.UserProfileCallback;
@@ -40,6 +42,7 @@ public class FeedFragment extends Fragment implements FeedView {
     private FeedViewAdapter recyclerViewAdapter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView feedNotAvailable;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -73,6 +76,7 @@ public class FeedFragment extends Fragment implements FeedView {
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.feed_list);
         progressBar = (ProgressBar) mRootView.findViewById(R.id.feed_list_progress);
         swipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.feed_list_swipe);
+        feedNotAvailable = (TextView) mRootView.findViewById(R.id.feed_not_available);
     }
 
 
@@ -142,6 +146,7 @@ public class FeedFragment extends Fragment implements FeedView {
     @Override
     public void startProgress() {
         progressBar.setVisibility(View.VISIBLE);
+        feedNotAvailable.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -151,19 +156,23 @@ public class FeedFragment extends Fragment implements FeedView {
     }
 
     @Override
-    public void updateFeed(List<Feed> feeds) {
+    public void updateFeed(List<Feed> feeds, LoadMode loadMode) {
         recyclerViewAdapter.setFeeds(feeds);
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setEmptyFeed() {
-
+        if(recyclerViewAdapter.getItemCount() == 0){
+            feedNotAvailable.setVisibility(View.VISIBLE);
+        } else {
+            feedNotAvailable.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
-    public void showErrorMessage(String message) {
-
+    public void showErrorMessage(int messageResourceId) {
+        mBaseView.showMessage(getView(), messageResourceId);
     }
 
 

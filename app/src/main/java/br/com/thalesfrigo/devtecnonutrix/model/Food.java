@@ -15,9 +15,13 @@ public class Food implements Parcelable {
 //        "fat": 16.2925,
 //        "protein": 23.8915,
 
+    @Expose
     private String description;
+    @Expose
     private String measure;
-    private int amount;
+    @Expose
+    private float amount;
+    @Expose
     private float weight;
     @Expose
     private float energy;
@@ -55,11 +59,11 @@ public class Food implements Parcelable {
         this.measure = measure;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -113,7 +117,7 @@ public class Food implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.description);
         dest.writeString(this.measure);
-        dest.writeInt(this.amount);
+        dest.writeFloat(this.amount);
         dest.writeFloat(this.weight);
         dest.writeFloat(this.energy);
         dest.writeFloat(this.carbohydrate);
@@ -124,7 +128,7 @@ public class Food implements Parcelable {
     protected Food(Parcel in) {
         this.description = in.readString();
         this.measure = in.readString();
-        this.amount = in.readInt();
+        this.amount = in.readFloat();
         this.weight = in.readFloat();
         this.energy = in.readFloat();
         this.carbohydrate = in.readFloat();

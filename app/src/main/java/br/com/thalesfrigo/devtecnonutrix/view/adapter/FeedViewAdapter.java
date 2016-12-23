@@ -62,8 +62,8 @@ public class FeedViewAdapter extends RecyclerView.Adapter<FeedViewHolder> {
         // Bind callback
         holder.profileClick(feed.getUser(), userProfileCallback);
 
-        holder.getMealStatusTextView().setText(feed.getMealType() + " de " + DateUtil.formatDate(feed.getMealDate(), "dd/MM/yyyy"));
-        holder.getMealEnergyTextView().setText(String.valueOf(feed.getEnergy()) + " kcal");
+        holder.getMealStatusTextView().setText(context.getString(R.string.meal_status, feed.getMealType(), DateUtil.formatDate(feed.getMealDate(), "dd/MM/yyyy")));
+        holder.getMealEnergyTextView().setText(context.getString(R.string.energy_value, String.format("%.2f", feed.getEnergy())));
 
         // Download feed imageUrl
         Glide.with(context)

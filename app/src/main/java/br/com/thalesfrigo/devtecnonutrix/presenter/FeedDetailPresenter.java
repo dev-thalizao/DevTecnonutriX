@@ -2,6 +2,7 @@ package br.com.thalesfrigo.devtecnonutrix.presenter;
 
 import android.util.Log;
 
+import br.com.thalesfrigo.devtecnonutrix.R;
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.networking.BaseNetworkingConfig;
 import br.com.thalesfrigo.devtecnonutrix.networking.FeedResponse;
@@ -47,14 +48,20 @@ public class FeedDetailPresenter implements BasePresenter<FeedDetailView> {
             public void onResponse(Call<FeedResponse> call, Response<FeedResponse> response) {
                 FeedResponse feedResponse = response.body();
 
-                feedDetailView.updateFeed(feedResponse.getFeed());
                 feedDetailView.finishProress();
-                Log.d(TAG, response.toString());
+
+                if(feedResponse.isSuccess()){
+                    feedDetailView.updateFeed(feedResponse.getFeed());
+                    Log.d(TAG, response.toString());
+                } else {
+                    feedDetailView.showErrorMessage(R.string.generic_error);
+                }
             }
 
             @Override
             public void onFailure(Call<FeedResponse> call, Throwable t) {
                 feedDetailView.finishProress();
+                feedDetailView.showErrorMessage(R.string.generic_error);
                 Log.e(TAG, t.toString());
             }
         });

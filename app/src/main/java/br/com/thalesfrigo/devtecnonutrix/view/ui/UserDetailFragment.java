@@ -161,12 +161,7 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
     }
 
     @Override
-    public void setEmptyFeed() {
-
-    }
-
-    @Override
-    public void showErrorMessage(String message) {
-
+    public void showErrorMessage(int messageResourceId) {
+        mBaseView.showMessage(getView(), messageResourceId);
     }
 }

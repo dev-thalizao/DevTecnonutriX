@@ -2,6 +2,10 @@ package br.com.thalesfrigo.devtecnonutrix.presenter;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import br.com.thalesfrigo.devtecnonutrix.R;
+import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.model.User;
 import br.com.thalesfrigo.devtecnonutrix.networking.BaseNetworkingConfig;
 import br.com.thalesfrigo.devtecnonutrix.networking.UserDetailResponse;
@@ -61,17 +65,23 @@ public class UserDetailPresenter implements BasePresenter<UserDetailView> {
             public void onResponse(Call<UserDetailResponse> call, Response<UserDetailResponse> response) {
                 UserDetailResponse userDetailResponse = response.body();
 
-                //Update timestamp
-                timestamp = String.valueOf(userDetailResponse.getTimestamp());
+                if(userDetailResponse.isSuccess()){
+                    //Update timestamp
+                    timestamp = String.valueOf(userDetailResponse.getTimestamp());
 
-                userDetailView.updateFeed(userDetailResponse.getUser(), userDetailResponse.getFeeds(), loadMode);
-                userDetailView.finishProress();
-                Log.d(TAG, response.toString());
+                    userDetailView.updateFeed(userDetailResponse.getUser(), userDetailResponse.getFeeds(), loadMode);
+                    userDetailView.finishProress();
+                    Log.d(TAG, response.toString());
+                } else {
+                    userDetailView.updateFeed(userDetailResponse.getUser(), new ArrayList<Feed>(), loadMode);
+                    userDetailView.showErrorMessage(R.string.generic_error);
+                }
             }
 
             @Override
             public void onFailure(Call<UserDetailResponse> call, Throwable t) {
                 userDetailView.finishProress();
+                userDetailView.showErrorMessage(R.string.generic_error);
                 Log.e(TAG, t.toString());
             }
         });

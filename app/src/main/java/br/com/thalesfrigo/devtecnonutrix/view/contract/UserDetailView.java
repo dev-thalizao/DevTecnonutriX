@@ -14,6 +14,5 @@ public interface UserDetailView  {
     void startProgress();
     void finishProress();
     void updateFeed(User user, List<Feed> feeds, LoadMode loadMode);
-    void setEmptyFeed();
-    void showErrorMessage(String message);
+    void showErrorMessage(int messageResourceId);
 }
