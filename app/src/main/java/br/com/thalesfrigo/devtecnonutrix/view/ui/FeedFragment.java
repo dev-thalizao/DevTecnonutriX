@@ -19,6 +19,7 @@ import br.com.thalesfrigo.devtecnonutrix.R;
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.model.User;
 import br.com.thalesfrigo.devtecnonutrix.presenter.FeedPresenter;
+import br.com.thalesfrigo.devtecnonutrix.util.DateUtil;
 import br.com.thalesfrigo.devtecnonutrix.view.adapter.FeedViewAdapter;
 import br.com.thalesfrigo.devtecnonutrix.view.callback.FeedListCallback;
 import br.com.thalesfrigo.devtecnonutrix.view.callback.UserProfileCallback;
@@ -29,7 +30,7 @@ import br.com.thalesfrigo.devtecnonutrix.view.contract.FeedView;
 
 public class FeedFragment extends Fragment implements FeedView {
 
-    private static final String TAG = FeedFragment.class.getSimpleName();
+    public static final String TAG = FeedFragment.class.getSimpleName();
     private View mRootView;
     private BaseActivityView mBaseView;
     private String mTitle;
@@ -53,11 +54,12 @@ public class FeedFragment extends Fragment implements FeedView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRootView = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        renderView();
-        init();
-
+        if(mRootView == null){
+            mRootView = inflater.inflate(R.layout.fragment_feed, container, false);
+            renderView();
+            init();
+        }
         return mRootView;
     }
 
@@ -97,8 +99,9 @@ public class FeedFragment extends Fragment implements FeedView {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("feed_parcel", feed);
                 feedDetailFragment.setArguments(bundle);
+                String title = getString(R.string.feed_detail_fragment_title, feed.getMealType().toString(), DateUtil.formatDate(feed.getMealDate(), "dd/MM/yyyy"));
 
-                mBaseView.changeFragment(feedDetailFragment, "Detail");
+                mBaseView.changeFragment(feedDetailFragment, FeedDetailFragment.TAG, title);
             }
         }, new UserProfileCallback() {
             @Override
@@ -111,7 +114,7 @@ public class FeedFragment extends Fragment implements FeedView {
                 bundle.putParcelable("user_parcel", user);
                 userDetailFragment.setArguments(bundle);
 
-                mBaseView.changeFragment(userDetailFragment, "User Detail");
+                mBaseView.changeFragment(userDetailFragment, UserDetailFragment.TAG, user.getName());
             }
         });
 

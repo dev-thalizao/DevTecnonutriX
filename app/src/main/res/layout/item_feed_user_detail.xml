@@ -7,7 +7,7 @@
         android:id="@+id/item_image_feed"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/dividerColor"
         android:scaleType="fitXY"/>
 
 </FrameLayout>

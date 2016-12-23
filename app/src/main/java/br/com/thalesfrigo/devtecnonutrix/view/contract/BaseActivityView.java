@@ -8,9 +8,9 @@ import android.view.View;
  */
 public interface BaseActivityView {
 
-    void initFragment(final Fragment fragment, final String title);
+    void initFragment(final Fragment fragment, final String tag, final String title);
 
-    void changeFragment(final Fragment fragment, final String title);
+    void changeFragment(final Fragment fragment, final String tag, final String title);
 
     void showMessage(View view, int messageResourceId);
 }

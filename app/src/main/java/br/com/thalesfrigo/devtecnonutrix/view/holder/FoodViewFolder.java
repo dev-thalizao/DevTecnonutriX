@@ -29,13 +29,14 @@ public class FoodViewFolder extends RecyclerView.ViewHolder {
         fatValue = (TextView) view.findViewById(R.id.fat_value);
     }
 
-    public void setFoodForDescription(int amount, String measure, float weight){
+    public void setFoodForDescription(String text){
         foodAmount.setVisibility(View.VISIBLE);
-        foodAmount.setText(String.valueOf(amount) + " " + measure + " de " + weight + "g");
+        foodAmount.setText(text);
     }
 
-    public void setFoodForTotal(){
-        foodName.setText("Total Consumido");
+    public void setFoodForTotal(String text){
+        foodName.setText(text);
+        foodName.setTextSize(20);
         foodAmount.setVisibility(View.INVISIBLE);
     }
 

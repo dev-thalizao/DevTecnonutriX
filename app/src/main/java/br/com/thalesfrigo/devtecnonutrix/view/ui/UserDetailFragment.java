@@ -34,19 +34,16 @@ import br.com.thalesfrigo.devtecnonutrix.view.contract.UserDetailView;
 
 public class UserDetailFragment extends Fragment implements UserDetailView {
 
-    private static final String TAG = UserDetailFragment.class.getSimpleName();
+    public static final String TAG = UserDetailFragment.class.getSimpleName();
     private View mRootView;
     private BaseActivityView mBaseView;
     private User user;
-
-    private String mTitle;
 
     private UserDetailPresenter userDetailPresenter;
     private RecyclerView recyclerView;
     private UserDetailViewAdapter recyclerViewAdapter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private InfiniteScrollListener infiniteScrollListener;
 
     public UserDetailFragment() {
     }
@@ -108,7 +105,7 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
                 bundle.putParcelable("feed_parcel", feed);
                 feedDetailFragment.setArguments(bundle);
 
-                mBaseView.changeFragment(feedDetailFragment, "Detail");
+                mBaseView.changeFragment(feedDetailFragment, FeedDetailFragment.TAG, "Detail");
             }
         });
         recyclerViewAdapter.setHasStableIds(true);
@@ -130,6 +127,12 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
                 userDetailPresenter.getFeedWithUser(user, LoadMode.SCROLL);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle(getString(R.string.user_detail_fragment_title, user.getName()));
     }
 
     @Override
@@ -165,14 +168,5 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
     @Override
     public void showErrorMessage(String message) {
 
-    }
-
-
-    private void addInfiniteScrollListener(){
-        recyclerView.addOnScrollListener(infiniteScrollListener);
-    }
-
-    private void removeIniniteScrollListener(){
-        recyclerView.clearOnScrollListeners();
     }
 }

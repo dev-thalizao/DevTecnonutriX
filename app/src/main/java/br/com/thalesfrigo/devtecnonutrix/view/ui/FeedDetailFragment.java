@@ -18,6 +18,7 @@ import br.com.thalesfrigo.devtecnonutrix.R;
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.model.User;
 import br.com.thalesfrigo.devtecnonutrix.presenter.FeedDetailPresenter;
+import br.com.thalesfrigo.devtecnonutrix.util.DateUtil;
 import br.com.thalesfrigo.devtecnonutrix.view.adapter.FeedDetailViewAdapter;
 import br.com.thalesfrigo.devtecnonutrix.view.callback.UserProfileCallback;
 import br.com.thalesfrigo.devtecnonutrix.view.contract.BaseActivityView;
@@ -25,7 +26,7 @@ import br.com.thalesfrigo.devtecnonutrix.view.contract.FeedDetailView;
 
 public class FeedDetailFragment extends Fragment implements FeedDetailView {
 
-    private static final String TAG = FeedDetailFragment.class.getSimpleName();
+    public static final String TAG = FeedDetailFragment.class.getSimpleName();
     private View mRootView;
     private BaseActivityView mBaseView;
     private Feed feed;
@@ -66,7 +67,7 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getString(R.string.feed_detail_fragment_title));
+        getActivity().setTitle(getString(R.string.feed_detail_fragment_title, feed.getMealType().toString(), DateUtil.formatDate(feed.getMealDate(), "dd/MM/yyyy")));
     }
 
     private void renderView(){
@@ -95,13 +96,17 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
             public void onClick(User user) {
                 Log.i(TAG, "Profile user clicked: " + user);
 
-                UserDetailFragment userDetailFragment = new UserDetailFragment(mBaseView);
+                UserDetailFragment userDetailFragment = (UserDetailFragment) getFragmentManager().findFragmentByTag(UserDetailFragment.TAG);
+                if(userDetailFragment == null){
+                    userDetailFragment = new UserDetailFragment(mBaseView);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("user_parcel", user);
+                    userDetailFragment.setArguments(bundle);
 
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("user_parcel", user);
-                userDetailFragment.setArguments(bundle);
-
-                mBaseView.changeFragment(userDetailFragment, "User Detail");
+                    mBaseView.changeFragment(userDetailFragment, UserDetailFragment.TAG, user.getName());
+                } else {
+                    getFragmentManager().popBackStack();
+                }
             }
         });
         recyclerViewAdapter.notifyDataSetChanged();
@@ -138,6 +143,4 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
     public void showErrorMessage(String message) {
 
     }
-
-
 }

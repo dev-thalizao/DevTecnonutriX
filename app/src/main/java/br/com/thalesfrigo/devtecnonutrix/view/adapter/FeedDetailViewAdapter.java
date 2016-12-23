@@ -62,7 +62,7 @@ public class FeedDetailViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Glide.with(context)
                     .load(feed.getUser().getImageUrl())
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .skipMemoryCache(true)
+                    .skipMemoryCache(false)
                     .into(feedViewHolder.getProfileImageView());
 
             // Bind callback
@@ -73,7 +73,7 @@ public class FeedDetailViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     .load(feed.getImageUrl())
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .skipMemoryCache(true)
+                    .skipMemoryCache(false)
                     .into(feedViewHolder.getMealImageView());
 
             feedViewHolder.setFeedForDetail();
@@ -83,17 +83,17 @@ public class FeedDetailViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if(position != getItemCount() - 1){
                 Food food = feed.getFoods().get(position - 1);
                 foodViewFolder.getFoodName().setText(food.getDescription());
-                foodViewFolder.setFoodForDescription(food.getAmount(), food.getMeasure(), food.getWeight());
-                foodViewFolder.getEnergyValue().setText(String.valueOf(food.getEnergy()));
-                foodViewFolder.getCarbValue().setText(String.valueOf(food.getCarbohydrate()));
-                foodViewFolder.getProtValue().setText(String.valueOf(food.getProtein()));
-                foodViewFolder.getFatValue().setText(String.valueOf(food.getFat()));
+                foodViewFolder.setFoodForDescription(context.getString(R.string.food_amount, String.valueOf(food.getAmount()), food.getMeasure(), String.format("%.2f", food.getWeight())));
+                foodViewFolder.getEnergyValue().setText(context.getString(R.string.energy_value, String.format("%.2f", food.getEnergy())));
+                foodViewFolder.getCarbValue().setText(context.getString(R.string.carb_value, String.format("%.2f", food.getCarbohydrate())));
+                foodViewFolder.getProtValue().setText(context.getString(R.string.prot_value, String.format("%.2f", food.getProtein())));
+                foodViewFolder.getFatValue().setText(context.getString(R.string.fat_value, String.format("%.2f", food.getFat())));
             } else {
-                foodViewFolder.setFoodForTotal();
-                foodViewFolder.getEnergyValue().setText(String.valueOf(feed.getEnergy()));
-                foodViewFolder.getCarbValue().setText(String.valueOf(feed.getCarbohydrate()));
-                foodViewFolder.getProtValue().setText(String.valueOf(feed.getProtein()));
-                foodViewFolder.getFatValue().setText(String.valueOf(feed.getFat()));
+                foodViewFolder.setFoodForTotal(context.getString(R.string.total_nutrients));
+                foodViewFolder.getEnergyValue().setText(context.getString(R.string.energy_value, String.format("%.2f", feed.getEnergy())));
+                foodViewFolder.getCarbValue().setText(context.getString(R.string.carb_value, String.format("%.2f", feed.getCarbohydrate())));
+                foodViewFolder.getProtValue().setText(context.getString(R.string.prot_value, String.format("%.2f", feed.getProtein())));
+                foodViewFolder.getFatValue().setText(context.getString(R.string.fat_value, String.format("%.2f", feed.getFat())));
             }
         }
 

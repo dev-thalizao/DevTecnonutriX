@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">DevTecnonutriX</string>
-    <string name="feed_fragment_title">Feed</string>
-    <string name="feed_detail_fragment_title">Feed Detail</string>
+    <string name="feed_fragment_title">DevTecnonutriX</string>
+    <string name="feed_detail_fragment_title">%1$s de %2$s</string>
+    <string name="user_detail_fragment_title">%1$s</string>
     <string name="primaryFont">sans-serif</string>
     <string name="secondaryFont">sans-serif-light</string>
+    <string name="food_name">Nome do alimento</string>
+    <string name="total_nutrients">Total Consumido</string>
+    <string name="food_amount">%1$s %2$s (%3$sg)</string>
+    <string name="energy_text">Cal</string>
+    <string name="carb_text">Carb</string>
+    <string name="prot_text">Prot</string>
+    <string name="fat_text">Fat</string>
+    <string name="energy_value">%1$sKcal</string>
+    <string name="carb_value">%1$sg</string>
+    <string name="prot_value">%1$sg</string>
+    <string name="fat_value">%1$sg</string>
 </resources>

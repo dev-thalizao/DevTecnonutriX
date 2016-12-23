@@ -12,6 +12,12 @@
         android:layout_height="wrap_content"
         card_view:cardElevation="2dp">
 
+        <!-- Separator -->
+        <View
+            android:layout_marginBottom="@dimen/default_space"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/darkDividerColor" />
 
         <!-- Name and Amount -->
         <LinearLayout
@@ -26,21 +32,29 @@
             android:layout_marginBottom="@dimen/default_space">
 
             <TextView
+                android:layout_marginTop="@dimen/default_space"
                 android:id="@+id/food_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nome do alimento"
-                android:textSize="18sp" />
+                android:text="@string/food_name"
+                android:fontFamily="@string/primaryFont"
+                android:textSize="@dimen/primaryFontSize"
+                android:textColor="@color/primaryText"/>
 
             <TextView
                 android:id="@+id/food_amount"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="X unidades (Yg)"
-                android:textSize="18sp" />
+                android:text="@string/food_amount"
+                android:fontFamily="@string/secondaryFont"
+                android:textSize="@dimen/secondaryTextSize"
+                android:textColor="@color/secondaryText"/>
 
             <!-- Separator -->
             <View
+                android:layout_marginTop="@dimen/default_space"
+                android:layout_marginBottom="@dimen/default_space"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/dividerColor" />
@@ -50,39 +64,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="10">
+                android:weightSum="10.5">
 
                 <TextView
                     android:id="@+id/energy_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Cal"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/energy_text"
+                    android:layout_weight="3"
+                    android:fontFamily="@string/primaryFont"
+                    android:textSize="@dimen/primaryFontSize"
+                    android:textColor="@color/primaryText"/>
 
                 <TextView
                     android:id="@+id/carb_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Carb"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/carb_text"
+                    android:layout_weight="2.5"
+                    android:fontFamily="@string/primaryFont"
+                    android:textSize="@dimen/primaryFontSize"
+                    android:textColor="@color/primaryText"/>
 
                 <TextView
                     android:id="@+id/prot_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Prot"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/prot_text"
+                    android:layout_weight="2.5"
+                    android:fontFamily="@string/primaryFont"
+                    android:textSize="@dimen/primaryFontSize"
+                    android:textColor="@color/primaryText"/>
 
                 <TextView
                     android:id="@+id/fat_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Cal"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/fat_text"
+                    android:layout_weight="2.5"
+                    android:fontFamily="@string/primaryFont"
+                    android:textSize="@dimen/primaryFontSize"
+                    android:textColor="@color/primaryText"/>
 
             </LinearLayout>
 
@@ -91,39 +113,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="10">
+                android:weightSum="10.5">
 
                 <TextView
                     android:id="@+id/energy_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="X k"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/energy_value"
+                    android:layout_weight="3.0"
+                    android:fontFamily="@string/secondaryFont"
+                    android:textSize="@dimen/secondaryTextSize"
+                    android:textColor="@color/secondaryText"/>
 
                 <TextView
                     android:id="@+id/carb_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="X g"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/carb_value"
+                    android:layout_weight="2.5"
+                    android:fontFamily="@string/secondaryFont"
+                    android:textSize="@dimen/secondaryTextSize"
+                    android:textColor="@color/secondaryText"/>
 
                 <TextView
                     android:id="@+id/prot_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="X g"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/prot_value"
+                    android:layout_weight="2.5"
+                    android:fontFamily="@string/secondaryFont"
+                    android:textSize="@dimen/secondaryTextSize"
+                    android:textColor="@color/secondaryText"/>
 
                 <TextView
                     android:id="@+id/fat_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="X g"
-                    android:textSize="18sp"
-                    android:layout_weight="2.5"/>
+                    android:text="@string/fat_value"
+                    android:layout_weight="2.5"
+                    android:fontFamily="@string/secondaryFont"
+                    android:textSize="@dimen/secondaryTextSize"
+                    android:textColor="@color/secondaryText"/>
 
             </LinearLayout>
 

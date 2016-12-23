@@ -10,9 +10,11 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardElevation="8dp">
+        android:layout_marginBottom="@dimen/default_space"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
 
         <LinearLayout
+            android:layout_margin="@dimen/default_space"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -29,14 +31,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thales Frigo"
-                android:layout_gravity="center"/>
+                android:fontFamily="@string/primaryFont"
+                android:textSize="@dimen/primaryFontSize"
+                android:textColor="@color/primaryText"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_space"/>
 
             <TextView
                 android:id="@+id/profile_goal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ficar bombadao"
-                android:layout_gravity="center"/>
+                android:fontFamily="@string/secondaryFont"
+                android:textSize="@dimen/secondaryTextSize"
+                android:textColor="@color/secondaryText"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/default_space"/>
 
         </LinearLayout>
 

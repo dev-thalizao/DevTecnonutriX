@@ -74,7 +74,7 @@ public class UserDetailViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             Glide.with(context)
                     .load(feed.getImageUrl())
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .skipMemoryCache(true)
+                    .skipMemoryCache(false)
                     .into(userDetailFeedViewHolder.getFeedItemImageView());
 
             userDetailFeedViewHolder.feedImageClick(feed, feedListCallback);
