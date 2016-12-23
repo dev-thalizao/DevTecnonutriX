@@ -1,4 +1,4 @@
-package br.com.thalesfrigo.devtecnonutrix.model;
+package br.com.thalesfrigo.devtecnonutrix.networking;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

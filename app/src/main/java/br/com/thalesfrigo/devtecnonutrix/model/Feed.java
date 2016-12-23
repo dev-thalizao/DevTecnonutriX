@@ -1,56 +1,19 @@
 package br.com.thalesfrigo.devtecnonutrix.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by thalesfrigo on 12/20/16.
  */
-
-//{
-//        "feedHash": "3253969-2016-12-21-2",
-//        "id": 21037056,
-//        "profile": {
-//        "id": 3253969,
-//        "name": "Taylane Nascimento",
-//        "image": "https://tnapp.blob.core.windows.net/profiles/3253969.jpg",
-//        "general_goal": "Perder peso",
-//        "following": false,
-//        "badge": null,
-//        "locale": "pt",
-//        "items_count": 4,
-//        "followers_count": 5,
-//        "followings_count": 1
-//        },
-//        "meal": 2,
-//        "date": "2016-12-21",
-//        "liked": false,
-//        "likes_count": 1,
-//        "comments_count": 1,
-//        "image": "https://tnapp.blob.core.windows.net/meals/3253969-2016-12-21-2.jpg",
-//        "comment": null,
-//        "place": null,
-//        "address": null,
-//        "energy": 468.303,
-//        "carbohydrate": 56.623,
-//        "fat": 16.2925,
-//        "protein": 23.8915,
-//        "fat_trans": 0.16825,
-//        "fat_sat": 6.9705,
-//        "fiber": 5.035,
-//        "sugar": 4.986,
-//        "sodium": 536.551,
-//        "calcium": 82.704,
-//        "iron": 2.3285,
-//        "moderation": 0,
-//        "badge": null,
-//        "locale": "pt"
-//        }
-
-public class Feed {
+public class Feed implements Parcelable {
 
     @SerializedName("feedHash")
     @Expose
@@ -68,21 +31,32 @@ public class Feed {
     @Expose
     private Date mealDate;
 
+    @SerializedName("foods")
+    @Expose
     private List<Food> foods;
 
     @Expose
-    private Food totalNutrients;
+    private float energy;
+
+    @Expose
+    private float carbohydrate;
+
+    @Expose
+    private float fat;
+
+    @Expose
+    private float protein;
 
     @SerializedName("profile")
     @Expose
     private User user;
 
-    public Feed(String hash, String imageUrl, MealType mealType, Date mealDate, Food totalNutrients, User user) {
+    public Feed(String hash, String imageUrl, MealType mealType, Date mealDate, float energy, User user) {
         this.hash = hash;
         this.imageUrl = imageUrl;
         this.mealType = mealType;
         this.mealDate = mealDate;
-        this.totalNutrients = totalNutrients;
+        this.energy = energy;
         this.user = user;
     }
 
@@ -126,12 +100,36 @@ public class Feed {
         this.foods = foods;
     }
 
-    public Food getTotalNutrients() {
-        return totalNutrients;
+    public float getEnergy() {
+        return energy;
     }
 
-    public void setTotalNutrients(Food totalNutrients) {
-        this.totalNutrients = totalNutrients;
+    public void setEnergy(float energy) {
+        this.energy = energy;
+    }
+
+    public float getCarbohydrate() {
+        return carbohydrate;
+    }
+
+    public void setCarbohydrate(float carbohydrate) {
+        this.carbohydrate = carbohydrate;
+    }
+
+    public float getFat() {
+        return fat;
+    }
+
+    public void setFat(float fat) {
+        this.fat = fat;
+    }
+
+    public float getProtein() {
+        return protein;
+    }
+
+    public void setProtein(float protein) {
+        this.protein = protein;
     }
 
     public User getUser() {
@@ -146,4 +144,51 @@ public class Feed {
     public String toString() {
         return hash + ": " + user.getName();
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.hash);
+        dest.writeString(this.imageUrl);
+        dest.writeInt(this.mealType == null ? -1 : this.mealType.ordinal());
+        dest.writeLong(this.mealDate != null ? this.mealDate.getTime() : -1);
+        dest.writeTypedList(this.foods);
+        dest.writeFloat(this.energy);
+        dest.writeFloat(this.carbohydrate);
+        dest.writeFloat(this.fat);
+        dest.writeFloat(this.protein);
+        dest.writeParcelable(this.user, flags);
+    }
+
+    protected Feed(Parcel in) {
+        this.hash = in.readString();
+        this.imageUrl = in.readString();
+        int tmpMealType = in.readInt();
+        this.mealType = tmpMealType == -1 ? null : MealType.values()[tmpMealType];
+        long tmpMealDate = in.readLong();
+        this.mealDate = tmpMealDate == -1 ? null : new Date(tmpMealDate);
+        this.foods = in.createTypedArrayList(Food.CREATOR);
+        this.energy = in.readFloat();
+        this.carbohydrate = in.readFloat();
+        this.fat = in.readFloat();
+        this.protein = in.readFloat();
+        this.user = in.readParcelable(User.class.getClassLoader());
+    }
+
+    public static final Creator<Feed> CREATOR = new Creator<Feed>() {
+        @Override
+        public Feed createFromParcel(Parcel source) {
+            return new Feed(source);
+        }
+
+        @Override
+        public Feed[] newArray(int size) {
+            return new Feed[size];
+        }
+    };
 }

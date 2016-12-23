@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
-import br.com.thalesfrigo.devtecnonutrix.model.FeedListResponse;
+import br.com.thalesfrigo.devtecnonutrix.networking.FeedListResponse;
 import br.com.thalesfrigo.devtecnonutrix.networking.BaseNetworkingConfig;
 import br.com.thalesfrigo.devtecnonutrix.service.FeedService;
 import br.com.thalesfrigo.devtecnonutrix.view.contract.FeedView;
@@ -49,7 +49,7 @@ public class FeedPresenter implements BasePresenter<FeedView> {
 
         final FeedView feedView = this.feedView;
         feedView.startProgress();
-        
+
         Call<FeedListResponse> call = this.feedService.getFeeds();
         call.enqueue(new Callback<FeedListResponse>() {
             @Override

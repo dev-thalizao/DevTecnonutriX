@@ -1,5 +1,8 @@
 package br.com.thalesfrigo.devtecnonutrix.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +12,7 @@ import java.util.List;
  * Created by thalesfrigo on 12/20/16.
  */
 
-public class User {
+public class User implements Parcelable {
 
 
     //        "profile": {
@@ -79,4 +82,39 @@ public class User {
     public void setFeeds(List<Feed> feeds) {
         this.feeds = feeds;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.goal);
+        dest.writeTypedList(this.feeds);
+    }
+
+    protected User(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.imageUrl = in.readString();
+        this.goal = in.readString();
+        this.feeds = in.createTypedArrayList(Feed.CREATOR);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

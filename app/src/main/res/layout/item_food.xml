@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/feed_card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        card_view:cardElevation="2dp">
+
+
+        <!-- Name and Amount -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/default_space"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/default_space">
+
+            <TextView
+                android:id="@+id/food_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome do alimento"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/food_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="X unidades (Yg)"
+                android:textSize="18sp" />
+
+            <!-- Separator -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividerColor" />
+
+            <!-- Text nutrients -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/energy_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cal"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+                <TextView
+                    android:id="@+id/carb_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Carb"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+                <TextView
+                    android:id="@+id/prot_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Prot"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+                <TextView
+                    android:id="@+id/fat_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cal"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <!-- Value nutrients -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/energy_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="X k"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+                <TextView
+                    android:id="@+id/carb_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="X g"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+                <TextView
+                    android:id="@+id/prot_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="X g"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+                <TextView
+                    android:id="@+id/fat_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="X g"
+                    android:textSize="18sp"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

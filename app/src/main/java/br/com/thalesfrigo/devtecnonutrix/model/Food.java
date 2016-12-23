@@ -1,12 +1,15 @@
 package br.com.thalesfrigo.devtecnonutrix.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 /**
  * Created by thalesfrigo on 12/20/16.
  */
 
-public class Food {
+public class Food implements Parcelable {
 //    "energy": 468.303,
     //        "carbohydrate": 56.623,
 //        "fat": 16.2925,
@@ -99,4 +102,45 @@ public class Food {
     public void setProtein(float protein) {
         this.protein = protein;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.description);
+        dest.writeString(this.measure);
+        dest.writeInt(this.amount);
+        dest.writeFloat(this.weight);
+        dest.writeFloat(this.energy);
+        dest.writeFloat(this.carbohydrate);
+        dest.writeFloat(this.fat);
+        dest.writeFloat(this.protein);
+    }
+
+    protected Food(Parcel in) {
+        this.description = in.readString();
+        this.measure = in.readString();
+        this.amount = in.readInt();
+        this.weight = in.readFloat();
+        this.energy = in.readFloat();
+        this.carbohydrate = in.readFloat();
+        this.fat = in.readFloat();
+        this.protein = in.readFloat();
+    }
+
+    public static final Parcelable.Creator<Food> CREATOR = new Parcelable.Creator<Food>() {
+        @Override
+        public Food createFromParcel(Parcel source) {
+            return new Food(source);
+        }
+
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
 }

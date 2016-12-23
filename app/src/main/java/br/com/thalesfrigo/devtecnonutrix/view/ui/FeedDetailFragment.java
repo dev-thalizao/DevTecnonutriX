@@ -13,50 +13,50 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.thalesfrigo.devtecnonutrix.R;
 import br.com.thalesfrigo.devtecnonutrix.model.Feed;
 import br.com.thalesfrigo.devtecnonutrix.model.User;
-import br.com.thalesfrigo.devtecnonutrix.presenter.FeedPresenter;
-import br.com.thalesfrigo.devtecnonutrix.view.adapter.FeedViewAdapter;
-import br.com.thalesfrigo.devtecnonutrix.view.callback.FeedListCallback;
+import br.com.thalesfrigo.devtecnonutrix.presenter.FeedDetailPresenter;
+import br.com.thalesfrigo.devtecnonutrix.view.adapter.FeedDetailViewAdapter;
 import br.com.thalesfrigo.devtecnonutrix.view.callback.UserProfileCallback;
-import br.com.thalesfrigo.devtecnonutrix.view.component.InfiniteScrollListener;
 import br.com.thalesfrigo.devtecnonutrix.view.contract.BaseActivityView;
-import br.com.thalesfrigo.devtecnonutrix.view.contract.FeedView;
+import br.com.thalesfrigo.devtecnonutrix.view.contract.FeedDetailView;
 
+public class FeedDetailFragment extends Fragment implements FeedDetailView {
 
-public class FeedFragment extends Fragment implements FeedView {
-
-    private static final String TAG = FeedFragment.class.getSimpleName();
+    private static final String TAG = FeedDetailFragment.class.getSimpleName();
     private View mRootView;
     private BaseActivityView mBaseView;
-    private String mTitle;
+    private Feed feed;
 
-    private FeedPresenter feedPresenter;
+    private FeedDetailPresenter feedDetailPresenter;
     private RecyclerView recyclerView;
-    private FeedViewAdapter recyclerViewAdapter;
+    private FeedDetailViewAdapter recyclerViewAdapter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public FeedFragment() {
+
+    public FeedDetailFragment() {
         // Required empty public constructor
     }
 
-    public FeedFragment(BaseActivityView mBaseView){
-        this.mBaseView = mBaseView;;
+    public FeedDetailFragment(BaseActivityView mBaseView) {
+        this.mBaseView = mBaseView;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mRootView = inflater.inflate(R.layout.fragment_feed, container, false);
+        // Inflate the layout for this fragment
+        mRootView = inflater.inflate(R.layout.fragment_feed_detail, container, false);
+
+        feed = getArguments().getParcelable("feed_parcel");
 
         renderView();
         init();
+
+        Log.d(TAG, feed.toString());
 
         return mRootView;
     }
@@ -64,7 +64,7 @@ public class FeedFragment extends Fragment implements FeedView {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(getString(R.string.feed_fragment_title));
+        getActivity().setTitle(getString(R.string.feed_detail_fragment_title));
     }
 
     public void renderView(){
@@ -76,9 +76,9 @@ public class FeedFragment extends Fragment implements FeedView {
 
     protected void init() {
         // Configure the presenter
-        feedPresenter = new FeedPresenter();
-        feedPresenter.attachView(this);
-        feedPresenter.getFeeds();
+        feedDetailPresenter = new FeedDetailPresenter();
+        feedDetailPresenter.attachView(this);
+        feedDetailPresenter.getFeed(feed);
 
         // Configure the recyclerView
         final LinearLayoutManager layoutManager = new LinearLayoutManager(mRootView.getContext());
@@ -87,42 +87,20 @@ public class FeedFragment extends Fragment implements FeedView {
         recyclerView.setHasFixedSize(true);
 
         // Configure the adapter
-        recyclerViewAdapter = new FeedViewAdapter(mRootView.getContext(), new FeedListCallback() {
-            @Override
-            public void onClick(Feed feed) {
-                Log.i(TAG, "Feed clicked: " + feed.getHash());
-                FeedDetailFragment feedDetailFragment = new FeedDetailFragment(mBaseView);
-
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("feed_parcel", feed);
-                feedDetailFragment.setArguments(bundle);
-
-                mBaseView.changeFragment(feedDetailFragment, "Detail");
-            }
-        }, new UserProfileCallback() {
+        recyclerViewAdapter = new FeedDetailViewAdapter(mRootView.getContext(), feed, new UserProfileCallback(){
             @Override
             public void onClick(User user) {
                 Log.d(TAG, "Profile user clicked");
             }
         });
-
-        recyclerViewAdapter.setFeeds(new ArrayList<Feed>());
+        recyclerViewAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(recyclerViewAdapter);
 
         // Init pull to refresh
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                feedPresenter.getFeeds();
-            }
-        });
-
-        // Init infinite scroll
-        recyclerView.addOnScrollListener(new InfiniteScrollListener(layoutManager) {
-            @Override
-            public void didReachTheEnd() {
-                Log.d(TAG, "increment feed");
-                feedPresenter.incrementFeeds(recyclerViewAdapter.getFeeds());
+                Log.i(TAG, "Update feed");
             }
         });
     }
@@ -139,14 +117,9 @@ public class FeedFragment extends Fragment implements FeedView {
     }
 
     @Override
-    public void updateFeed(List<Feed> feeds) {
-        recyclerViewAdapter.setFeeds(feeds);
+    public void updateFeed(Feed feed) {
+        recyclerViewAdapter.setFeed(feed);
         recyclerViewAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void setEmptyFeed() {
-
     }
 
     @Override
