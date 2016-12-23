@@ -17,13 +17,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FeedFragment feedFragment = new FeedFragment(this);
-
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("contact_parcel", contact);
-//        messagesListFragment.setArguments(bundle);
-
-        initFragment(feedFragment, "Feed");
+        initFragment(new FeedFragment(this), "DevTecnonutriX");
     }
 
     @Override

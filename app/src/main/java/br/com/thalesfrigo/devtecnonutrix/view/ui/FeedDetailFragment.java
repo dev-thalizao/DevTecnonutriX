@@ -29,6 +29,7 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
     private View mRootView;
     private BaseActivityView mBaseView;
     private Feed feed;
+    private String mTitle;
 
     private FeedDetailPresenter feedDetailPresenter;
     private RecyclerView recyclerView;
@@ -46,8 +47,9 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_feed_detail, container, false);
 
@@ -67,14 +69,14 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
         getActivity().setTitle(getString(R.string.feed_detail_fragment_title));
     }
 
-    public void renderView(){
+    private void renderView(){
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.feed_list);
         progressBar = (ProgressBar) mRootView.findViewById(R.id.feed_list_progress);
         swipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.feed_list_swipe);
     }
 
 
-    protected void init() {
+    private void init() {
         // Configure the presenter
         feedDetailPresenter = new FeedDetailPresenter();
         feedDetailPresenter.attachView(this);
@@ -85,12 +87,21 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(null);
 
         // Configure the adapter
         recyclerViewAdapter = new FeedDetailViewAdapter(mRootView.getContext(), feed, new UserProfileCallback(){
             @Override
             public void onClick(User user) {
-                Log.d(TAG, "Profile user clicked");
+                Log.i(TAG, "Profile user clicked: " + user);
+
+                UserDetailFragment userDetailFragment = new UserDetailFragment(mBaseView);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user_parcel", user);
+                userDetailFragment.setArguments(bundle);
+
+                mBaseView.changeFragment(userDetailFragment, "User Detail");
             }
         });
         recyclerViewAdapter.notifyDataSetChanged();
@@ -100,7 +111,7 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i(TAG, "Update feed");
+                feedDetailPresenter.getFeed(feed);
             }
         });
     }
@@ -118,6 +129,7 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
 
     @Override
     public void updateFeed(Feed feed) {
+        this.feed = feed;
         recyclerViewAdapter.setFeed(feed);
         recyclerViewAdapter.notifyDataSetChanged();
     }
@@ -126,4 +138,6 @@ public class FeedDetailFragment extends Fragment implements FeedDetailView {
     public void showErrorMessage(String message) {
 
     }
+
+
 }

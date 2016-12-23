@@ -43,12 +43,18 @@ public class User implements Parcelable {
     @Expose
     private String goal;
 
-    private List<Feed> feeds;
-
     public User(String name, String imageUrl, String goal) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.goal = goal;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -75,14 +81,10 @@ public class User implements Parcelable {
         this.goal = goal;
     }
 
-    public List<Feed> getFeeds() {
-        return feeds;
+    @Override
+    public String toString() {
+        return id + ": " + name;
     }
-
-    public void setFeeds(List<Feed> feeds) {
-        this.feeds = feeds;
-    }
-
 
     @Override
     public int describeContents() {
@@ -95,7 +97,6 @@ public class User implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.imageUrl);
         dest.writeString(this.goal);
-        dest.writeTypedList(this.feeds);
     }
 
     protected User(Parcel in) {
@@ -103,7 +104,6 @@ public class User implements Parcelable {
         this.name = in.readString();
         this.imageUrl = in.readString();
         this.goal = in.readString();
-        this.feeds = in.createTypedArrayList(Feed.CREATOR);
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {

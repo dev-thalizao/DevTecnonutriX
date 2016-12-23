@@ -2,4 +2,6 @@
     <string name="app_name">DevTecnonutriX</string>
     <string name="feed_fragment_title">Feed</string>
     <string name="feed_detail_fragment_title">Feed Detail</string>
+    <string name="primaryFont">sans-serif</string>
+    <string name="secondaryFont">sans-serif-light</string>
 </resources>

@@ -67,14 +67,14 @@ public class FeedFragment extends Fragment implements FeedView {
         getActivity().setTitle(getString(R.string.feed_fragment_title));
     }
 
-    public void renderView(){
+    private void renderView(){
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.feed_list);
         progressBar = (ProgressBar) mRootView.findViewById(R.id.feed_list_progress);
         swipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.feed_list_swipe);
     }
 
 
-    protected void init() {
+    private void init() {
         // Configure the presenter
         feedPresenter = new FeedPresenter();
         feedPresenter.attachView(this);
@@ -85,6 +85,7 @@ public class FeedFragment extends Fragment implements FeedView {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(null);
 
         // Configure the adapter
         recyclerViewAdapter = new FeedViewAdapter(mRootView.getContext(), new FeedListCallback() {
@@ -102,7 +103,15 @@ public class FeedFragment extends Fragment implements FeedView {
         }, new UserProfileCallback() {
             @Override
             public void onClick(User user) {
-                Log.d(TAG, "Profile user clicked");
+                Log.i(TAG, "Profile user clicked: " + user);
+
+                UserDetailFragment userDetailFragment = new UserDetailFragment(mBaseView);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user_parcel", user);
+                userDetailFragment.setArguments(bundle);
+
+                mBaseView.changeFragment(userDetailFragment, "User Detail");
             }
         });
 
@@ -153,4 +162,6 @@ public class FeedFragment extends Fragment implements FeedView {
     public void showErrorMessage(String message) {
 
     }
+
+
 }

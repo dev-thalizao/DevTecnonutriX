@@ -23,8 +23,8 @@ import br.com.thalesfrigo.devtecnonutrix.view.holder.FoodViewFolder;
 
 public class FeedDetailViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int FEED_TYPE = 0;
-    public static final int FOOD_TYPE = 1;
+    static final int FEED_TYPE = 0;
+    static final int FOOD_TYPE = 1;
 
     private Context context;
     private Feed feed;
