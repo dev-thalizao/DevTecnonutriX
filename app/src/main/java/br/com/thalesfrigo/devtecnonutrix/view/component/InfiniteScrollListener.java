@@ -17,7 +17,7 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
     private LayoutManager layoutManager;
     private int previousTotal = 0;
     private boolean loading = true;
-    private int visibleThreshold = 2;
+    private int visibleThreshold = 5;
     int firstVisibleItem, visibleItemCount, totalItemCount;
 
     public InfiniteScrollListener(LayoutManager layoutManager) {

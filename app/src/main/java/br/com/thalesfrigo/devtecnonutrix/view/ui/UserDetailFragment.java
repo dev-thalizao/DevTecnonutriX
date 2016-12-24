@@ -57,10 +57,12 @@ public class UserDetailFragment extends Fragment implements UserDetailView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mRootView = inflater.inflate(R.layout.fragment_user, container, false);
-        user = getArguments().getParcelable("user_parcel");
-        renderView();
-        init();
+        if(mRootView == null){
+            mRootView = inflater.inflate(R.layout.fragment_user, container, false);
+            user = getArguments().getParcelable("user_parcel");
+            renderView();
+            init();
+        }
 
         return mRootView;
     }

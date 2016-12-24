@@ -64,13 +64,12 @@ public class UserDetailPresenter implements BasePresenter<UserDetailView> {
             @Override
             public void onResponse(Call<UserDetailResponse> call, Response<UserDetailResponse> response) {
                 UserDetailResponse userDetailResponse = response.body();
+                userDetailView.finishProress();
 
                 if(userDetailResponse.isSuccess()){
                     //Update timestamp
                     timestamp = String.valueOf(userDetailResponse.getTimestamp());
-
                     userDetailView.updateFeed(userDetailResponse.getUser(), userDetailResponse.getFeeds(), loadMode);
-                    userDetailView.finishProress();
                     Log.d(TAG, response.toString());
                 } else {
                     userDetailView.updateFeed(userDetailResponse.getUser(), new ArrayList<Feed>(), loadMode);

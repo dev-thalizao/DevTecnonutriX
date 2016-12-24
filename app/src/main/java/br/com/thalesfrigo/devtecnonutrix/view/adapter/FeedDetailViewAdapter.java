@@ -83,7 +83,7 @@ public class FeedDetailViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if(position != getItemCount() - 1){
                 Food food = feed.getFoods().get(position - 1);
                 foodViewFolder.getFoodName().setText(food.getDescription());
-                foodViewFolder.setFoodForDescription(context.getString(R.string.food_amount, String.valueOf(food.getAmount()), food.getMeasure(), String.format("%.2f", food.getWeight())));
+                foodViewFolder.setFoodForDescription(context.getString(R.string.food_amount, String.format("%f", food.getAmount()), food.getMeasure(), String.format("%.2f", food.getWeight())));
                 foodViewFolder.getEnergyValue().setText(context.getString(R.string.energy_value, String.format("%.2f", food.getEnergy())));
                 foodViewFolder.getCarbValue().setText(context.getString(R.string.carb_value, String.format("%.2f", food.getCarbohydrate())));
                 foodViewFolder.getProtValue().setText(context.getString(R.string.prot_value, String.format("%.2f", food.getProtein())));
